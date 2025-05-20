@@ -2,12 +2,11 @@ import React from "react";
 
 const Candidates = ({data}) => {
 
- console.log(data[0].AppliedOn.split("T")[0]);
 
   return (
     <>
-      {data.map((candidate) => (
-          <div className="flex  border-b border-slate-300  py-3 p-3 text-zinc-600">
+      {data.map((candidate,idx) => (
+          <div key={idx} className="flex  border-b border-slate-300  py-3 p-3 text-zinc-600">
       <p className="w-[10%] flex items-center">
         <input type="checkbox" className="border px-1 rounded-sm size-5"/>
       </p>
