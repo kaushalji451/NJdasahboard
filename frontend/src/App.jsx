@@ -1,6 +1,22 @@
 import React from "react";
-import User from "./component/user";
+import Candidates from "./component/Candidates";
+import { useState, useEffect } from "react";
 const App = () => {
+  const [candidates, setCandidates] = useState([]);
+
+  useEffect(() => {
+    let handleData = async () => {
+      let data = await fetch("http://localhost:3000/candidates");
+      let result = await data.json();
+      if (result) {
+        setCandidates(result);
+      }
+    };
+    handleData();
+  }, []);
+
+  
+
   return (
     <div className="flex">
       <div className="h-[100vh] w-1/4 border-e border-slate-300">
@@ -71,20 +87,51 @@ const App = () => {
         <div className="flex justify-between my-5 ">
           <div>
             <h1 className="text-xl font-semibold">Candidates</h1>
-            <p className="text-zinc-500">Browse and manage all the candiates for this postion</p>
+            <p className="text-zinc-500">
+              Browse and manage all the candiates for this postion
+            </p>
           </div>
           <div className="flex gap-2 items-center">
-            <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md ">Export</button>
-            <button className="bg-blue-600 text-white h-fit py-1 px-2 rounded-md">Upload CV</button>
+            <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md ">
+              Export
+            </button>
+            <button className="bg-blue-600 text-white h-fit py-1 px-2 rounded-md">
+              Upload CV
+            </button>
           </div>
         </div>
         {/* second nav */}
         <div className="flex gap-4 border-b border-slate-200 pb-2 text-zinc-600">
-          <p>To Review <span className="border border-slate-200 text-[10px] p-[2px]">35</span></p>
-          <p>Recomended <span className="border border-slate-200 text-[10px] p-[2px]">35</span></p>
-          <p>Accepted <span className="border border-slate-200 text-[10px] p-[2px]">35</span></p>
-          <p>offer send <span className="border border-slate-200 text-[10px] p-[2px]">35</span></p>
-          <p>Rejected <span className="border border-slate-200 text-[10px] p-[2px]">35</span></p>
+          <p>
+            To Review{" "}
+            <span className="border border-slate-200 text-[10px] p-[2px]">
+              35
+            </span>
+          </p>
+          <p>
+            Recomended{" "}
+            <span className="border border-slate-200 text-[10px] p-[2px]">
+              35
+            </span>
+          </p>
+          <p>
+            Accepted{" "}
+            <span className="border border-slate-200 text-[10px] p-[2px]">
+              35
+            </span>
+          </p>
+          <p>
+            offer send{" "}
+            <span className="border border-slate-200 text-[10px] p-[2px]">
+              35
+            </span>
+          </p>
+          <p>
+            Rejected{" "}
+            <span className="border border-slate-200 text-[10px] p-[2px]">
+              35
+            </span>
+          </p>
         </div>
         {/* third main */}
         <div>
@@ -92,14 +139,22 @@ const App = () => {
           <div className="flex justify-between py-[18px] ">
             <p className="text-zinc-600">Showing 36 out of 36</p>
             <div className="flex gap-3">
-              <input type="text" placeholder="search for a candidate..." className="border border-slate-300  rounded-md ps-4"/>
-              <button className="border border-slate-200 px-2 py-1 rounded-md">Filters</button>
+              <input
+                type="text"
+                placeholder="search for a candidate..."
+                className="border border-slate-300  rounded-md ps-4"
+              />
+              <button className="border border-slate-200 px-2 py-1 rounded-md">
+                Filters
+              </button>
             </div>
           </div>
           {/* main */}
           <div className="border border-slate-300 rounded-md">
             <div className="flex border-b border-slate-300 pb-2  p-3 bg-slate-200 text-zinc-600 rounded-md">
-              <p className="w-[10%] "><span className="border px-1 rounded-sm">-</span></p>
+              <p className="w-[10%] ">
+                <span className="border px-1 rounded-sm">-</span>
+              </p>
               <p className="w-[30%]">Name</p>
               <p className="w-[10%]">Status</p>
               <p className="w-[10%]">Ai Rateing</p>
@@ -108,17 +163,9 @@ const App = () => {
               <p className="w-[10%] text-end">:</p>
             </div>
             <div className=" overflow-y-scroll h-[68vh] bg-slate-100">
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
-            <User/>
+             {
+              candidates.length>0 && <Candidates data={candidates}/>
+             }
             </div>
           </div>
         </div>
