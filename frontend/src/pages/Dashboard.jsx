@@ -2,20 +2,6 @@ import React from "react";
 import Candidates from "../component/Candidates";
 import { useState, useEffect } from "react";
 const Dashboard = () => {
-  const [candidates, setCandidates] = useState([]);
-
-  useEffect(() => {
-    let handleData = async () => {
-      let data = await fetch("http://localhost:3000/candidates");
-      let result = await data.json();
-      if (result) {
-        setCandidates(result);
-      }
-    };
-    handleData();
-  }, []);
-
-  
 
   return (
     <div className="flex">
@@ -163,9 +149,7 @@ const Dashboard = () => {
               <p className="w-[10%] text-end">:</p>
             </div>
             <div className=" overflow-y-scroll h-[68vh] bg-slate-100">
-             {
-              candidates.length>0 && <Candidates data={candidates}/>
-             }
+              <Candidates/>
             </div>
           </div>
         </div>

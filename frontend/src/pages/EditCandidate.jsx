@@ -1,6 +1,10 @@
 import React from "react";
-import { useState } from "react";
-const AddCandidate = () => {
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+const EditCandidate = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [form, setform] = useState({
     Name: "",
     EmailId: "",
@@ -12,18 +16,42 @@ const AddCandidate = () => {
     CvUrl: "",
   });
 
+  useEffect(() => {
+    let handleData = async () => {
+      try {
+        let data = await fetch(`http://localhost:3000/candidates/${id}`);
+        let result = await data.json();
+        if (result != null) {
+          console.log(result);
+          setform({
+            Name: result.Name,
+            EmailId: result.EmailId,
+            ImageUrl: result.ImageUrl,
+            Status: result.Status,
+            AiRating: result.AiRating,
+            AppliedOn: result.AppliedOn.split("T")[0],
+            Tag: result.Tag,
+            CvUrl: result.CvUrl,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleData();
+  }, []);
+
   let handleChange = (e) => {
     setform({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let data = await fetch("http://localhost:3000/candidates", {
-        method: "POST",
+      let data = await fetch(`http://localhost:3000/candidates/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -31,22 +59,16 @@ const AddCandidate = () => {
       });
       let result = await data.json();
       if (result) {
-        setform({
-          Name: "",
-          EmailId: "",
-          ImageUrl: "",
-          Status: "",
-          AiRating: "",
-          AppliedOn: "",
-          Tag: "",
-          CvUrl: "",
-        });
+        alert("Candidate updated successfully");
+        setTimeout(() => {
+          navigate("/");
+        }, 100);
       }
-      console.log("Candidate added successfully:", result);
     } catch (error) {
       console.log("Error in adding candidate:", error);
     }
   };
+
   return (
     <>
       <div className="mt-10 flex flex-col items-center">
@@ -177,4 +199,4 @@ const AddCandidate = () => {
   );
 };
 
-export default AddCandidate;
+export default EditCandidate;
