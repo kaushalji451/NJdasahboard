@@ -15,6 +15,18 @@ candidatesRoute.get("/", async (req, res) => {
   }
 });
 
+candidatesRoute.get("/search", async (req, res) => {
+  try {
+    let { name } = req.query;
+    let data = await Candidates.find({
+      Name: { $regex: name, $options: "i" },
+    });
+    res.json({ message: "done", data });
+  } catch (error) {
+    res.status(500).json({ message: "error", error });
+  }
+});
+
 candidatesRoute.get("/:id", async (req, res) => {
   let {id} = req.params;
   try {
@@ -69,5 +81,7 @@ candidatesRoute.delete("/:id",async(req,res)=>{
       res.status(500).json({ message: "Internal server error" });
     }
 })
+
+
 
 module.exports = candidatesRoute;

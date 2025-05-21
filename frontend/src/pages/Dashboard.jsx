@@ -2,6 +2,28 @@ import React from "react";
 import Candidates from "../component/Candidates";
 import { useState, useEffect } from "react";
 const Dashboard = () => {
+  const [search, setsearch] = useState("");
+  const [dropdown, setdropdown] = useState(false);
+  let handleChange = async (e) => {
+    if (e.target.value === "") {
+      setsearch("");
+    } else {
+      let data = await fetch(
+        `http://localhost:3000/candidates/search?name=${e.target.value}`
+      );
+      let result = await data.json();
+      setsearch(result.data);
+    }
+  };
+
+  useEffect(() => {
+    if(search.length>0){
+      setdropdown(true);
+    }else{
+      setdropdown(false);
+    }
+  }, [search]);
+  
 
   return (
     <div className="flex">
@@ -129,7 +151,25 @@ const Dashboard = () => {
                 type="text"
                 placeholder="search for a candidate..."
                 className="border border-slate-300  rounded-md ps-4"
+                onChange={handleChange}
               />
+
+              {dropdown === true && (
+                <div className="absolute mt-10 bg-white w-70 border border-slate-400 py-2 rounded-md">
+                  {search.length > 0 && (
+                    <div className="mx-2">
+                      {search.map((candidate) => (
+                        <p
+                          key={candidate._id}
+                          className="border-t py-1 px-2 border-slate-400"
+                        >
+                          {candidate.Name}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               <button className="border border-slate-200 px-2 py-1 rounded-md">
                 Filters
               </button>
@@ -149,7 +189,7 @@ const Dashboard = () => {
               <p className="w-[10%] text-end">:</p>
             </div>
             <div className=" overflow-y-scroll h-[68vh] bg-slate-100">
-              <Candidates/>
+              <Candidates />
             </div>
           </div>
         </div>

@@ -1,21 +1,22 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 3000;  
-const dotenv = require('dotenv');
+const port = process.env.PORT || 3000;
+const dotenv = require("dotenv");
 dotenv.config();
 const candidatesRoute = require("./routes/candidates.route");
 
+const Candidates = require("./models/candidates");
+
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/candidates",candidatesRoute);
+app.use("/candidates", candidatesRoute);
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
