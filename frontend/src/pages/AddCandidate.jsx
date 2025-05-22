@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const AddCandidate = () => {
+  const navigate = useNavigate();
   const [form, setform] = useState({
     Name: "",
     EmailId: "",
-    ImageUrl: "",
+    image: "",
     Status: "",
     AiRating: "",
     AppliedOn: "",
@@ -21,20 +23,26 @@ const AddCandidate = () => {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
+     const formData = new FormData();
+  formData.append("Name", form.Name);
+  formData.append("EmailId", form.EmailId);
+  formData.append("image", form.image); // file, not URL
+  formData.append("Status", form.Status);
+  formData.append("AiRating", form.AiRating);
+  formData.append("AppliedOn", form.AppliedOn);
+  formData.append("Tag", form.Tag);
+  formData.append("CvUrl", form.CvUrl);
     try {
       let data = await fetch("http://localhost:3000/candidates", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
+        body: formData,
       });
       let result = await data.json();
       if (result) {
         setform({
           Name: "",
           EmailId: "",
-          ImageUrl: "",
+          image: "",
           Status: "",
           AiRating: "",
           AppliedOn: "",
@@ -42,7 +50,10 @@ const AddCandidate = () => {
           CvUrl: "",
         });
       }
-      console.log("Candidate added successfully:", result);
+      if(result) {
+        alert("Candidate added successfully");
+        navigate("/");
+      }
     } catch (error) {
       console.log("Error in adding candidate:", error);
     }
@@ -83,14 +94,19 @@ const AddCandidate = () => {
           </div>
           {/* image url */}
           <div className="flex flex-col">
-            <label htmlFor="image_url">Image Url</label>
+            <label htmlFor="image">Image Url</label>
             <input
-              type="text"
-              id="image_url"
-              name="ImageUrl"
+              type="file"
+              id="image"
+              name="image"
               className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.ImageUrl}
+              // value={form.ImageUrl}
+              onChange={(e) => {
+                setform({
+                  ...form,
+                  image: e.target.files[0], // keep actual File object
+                });
+              }}
               required
             />
           </div>

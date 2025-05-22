@@ -1,6 +1,7 @@
 import React from "react";
 import Candidates from "../component/Candidates";
 import { useState, useEffect } from "react";
+import { Link  } from "react-router-dom";
 const Dashboard = () => {
   const [search, setsearch] = useState("");
   const [dropdown, setdropdown] = useState(false);
@@ -100,6 +101,9 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex gap-2 items-center">
+            <Link className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " to="/add">
+              Add
+            </Link>
             <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md ">
               Export
             </button>

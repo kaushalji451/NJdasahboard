@@ -11,7 +11,7 @@ const candidateSchema = new Schema(
       type: String,
       required: true,
     },
-    ImageUrl: {
+    image: {
       type: String,
       required: true,
     },

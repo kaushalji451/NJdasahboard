@@ -46,7 +46,7 @@ const Candidates = () => {
           <div className="w-[30%] flex items-center gap-4 ">
             <div>
               <img
-                src={candidate.ImageUrl}
+                src={candidate.image}
                 alt=""
                 className="w-10 h-10 rounded-full"
               />

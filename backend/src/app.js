@@ -5,8 +5,7 @@ const port = process.env.PORT || 3000;
 const dotenv = require("dotenv");
 dotenv.config();
 const candidatesRoute = require("./routes/candidates.route");
-
-const Candidates = require("./models/candidates");
+const  upload = require("./utils/Imageupload");
 
 app.use(cors());
 app.use(express.json());

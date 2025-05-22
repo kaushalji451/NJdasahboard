@@ -8,7 +8,7 @@ const EditCandidate = () => {
   const [form, setform] = useState({
     Name: "",
     EmailId: "",
-    ImageUrl: "",
+    image: "",
     Status: "",
     AiRating: "",
     AppliedOn: "",
@@ -26,7 +26,7 @@ const EditCandidate = () => {
           setform({
             Name: result.Name,
             EmailId: result.EmailId,
-            ImageUrl: result.ImageUrl,
+            image: result.image,
             Status: result.Status,
             AiRating: result.AiRating,
             AppliedOn: result.AppliedOn.split("T")[0],
@@ -105,14 +105,14 @@ const EditCandidate = () => {
           </div>
           {/* image url */}
           <div className="flex flex-col">
-            <label htmlFor="image_url">Image Url</label>
+            <label htmlFor="image">Image Url</label>
             <input
               type="text"
-              id="image_url"
-              name="ImageUrl"
+              id="image"
+              name="image"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
-              value={form.ImageUrl}
+              value={form.image}
               required
             />
           </div>
