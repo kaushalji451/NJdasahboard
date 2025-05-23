@@ -1,8 +1,9 @@
 const express = require("express");
 const candidatesRoute = express.Router();
 const connectDb = require("../initdb/connectDb");
-const Candidates = require("../models/candidates");
+const {CandidateModel}  = require("../models/candidates");
 const dotenv = require("dotenv");
+const Candidates = CandidateModel;
 connectDb();
 
 const multer = require("multer");
