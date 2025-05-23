@@ -6,7 +6,6 @@ import { Link  } from "react-router-dom";
 import UploadResume from "../component/UploadResume";
 
 const Dashboard = () => {
-  console.log("this is env", import.meta.env.VITE_API_URL);
   const [search, setsearch] = useState("");
   const [dropdown, setdropdown] = useState(false);
   let handleChange = async (e) => {
