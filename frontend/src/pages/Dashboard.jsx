@@ -6,6 +6,7 @@ import { Link  } from "react-router-dom";
 import UploadResume from "../component/UploadResume";
 
 const Dashboard = () => {
+  console.log("this is env", import.meta.env.VITE_API_URL);
   const [search, setsearch] = useState("");
   const [dropdown, setdropdown] = useState(false);
   let handleChange = async (e) => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
       setsearch("");
     } else {
       let data = await fetch(
-        `${process.env.VITE_API_URL}/candidates/search?name=${e.target.value}`
+        `${import.meta.env.VITE_API_URL}/candidates/search?name=${e.target.value}`
       );
       let result = await data.json();
       setsearch(result.data);

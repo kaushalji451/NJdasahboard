@@ -29,7 +29,7 @@ const AddCandidate = () => {
   formData.append("AppliedOn", form.AppliedOn);
   formData.append("Tag", form.Tag);
     try {
-      let data = await fetch(`${process.env.VITE_API_URL}/candidates`, {
+      let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates`, {
         method: "POST",
         body: formData,
       });

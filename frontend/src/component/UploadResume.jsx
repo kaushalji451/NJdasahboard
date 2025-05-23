@@ -16,7 +16,7 @@ const UploadResume = () => {
       setsearch("");
     } else {
       let data = await fetch(
-        `${process.env.VITE_API_URL}/candidates/search?name=${e.target.value}`
+        `${import.meta.env.VITE_API_URL}/candidates/search?name=${e.target.value}`
       );
       let result = await data.json();
       setsearch(result.data);
@@ -48,7 +48,7 @@ const UploadResume = () => {
     formData.append("CvUrl", form.resume);
 
     try {
-      let data = await fetch(`${process.env.VITE_API_URL}/candidate/upload`, {
+      let data = await fetch(`${import.meta.env.VITE_API_URL}/candidate/upload`, {
         method: "POST",
         body: formData,
       });
