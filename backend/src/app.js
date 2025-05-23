@@ -10,7 +10,7 @@ const authRouter = require("./routes/auth.route");
 const uploadCvRoute = require("./routes/uploadCv.route");
 
 app.use(cors({
-  origin: 'http://localhost:5173' 
+  origin: process.env.CLIENT_URL,
 }));
 app.use(express.json());
 app.use(express.static("public"));
