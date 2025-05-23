@@ -7,7 +7,7 @@ const Candidates = () => {
 
 
   let handleDelete = async (id) => {
-    let data = await fetch(`http://localhost:3000/candidates/${id}`, {
+    let data = await fetch(`${process.env.VITE_API_URL}/candidates/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const Candidates = () => {
 
     useEffect(() => {
     let handleData = async () => {
-      let data = await fetch("http://localhost:3000/candidates");
+      let data = await fetch(`${process.env.VITE_API_URL}/candidates`);
       let result = await data.json();
       if (result) {
         setData(result);
