@@ -29,6 +29,24 @@ const Dashboard = () => {
   }, [search]);
   
 
+  let handleClick = async () => {
+    let data = await fetch(
+      `${import.meta.env.VITE_API_URL}/export`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+      }
+    );
+    const blob = await data.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "candidates.pdf";
+    a.click();
+  }
+
   return (
     <div className="flex">
       <div className="h-[100vh] w-1/4 border-e border-slate-300">
@@ -108,7 +126,7 @@ const Dashboard = () => {
             <Link className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " to="/add">
               Add
             </Link>
-            <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md ">
+            <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " onClick={handleClick}>
               Export
             </button>
 
