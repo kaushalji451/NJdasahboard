@@ -63,17 +63,15 @@ candidatesRoute.get("/:id", async (req, res) => {
 
 candidatesRoute.post("/", upload.single("image"), async (req, res) => {
   let imageUrl = req.file.path;
-  let { Name, EmailId, Status, AiRating, AppliedOn, Tag, CvUrl } = req.body;
+  let { Name, EmailId, AiRating, AppliedOn, Tag } = req.body;
   try {
     let data = await Candidates.create({
       Name,
       EmailId,
       image: imageUrl,
-      Status,
       AiRating,
       AppliedOn,
       Tag,
-      CvUrl,
     });
     res.status(201).json(data);
   } catch (error) {
@@ -82,10 +80,20 @@ candidatesRoute.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-candidatesRoute.put("/:id", async (req, res) => {
+candidatesRoute.put("/:id",upload.single("image"), async (req, res) => {
   let { id } = req.params;
+  let imageUrl = req.file.path;
+  let { Name, EmailId,  AiRating, AppliedOn, Tag } = req.body;
+
   try {
-    let data = await Candidates.findByIdAndUpdate(id, req.body);
+    let data = await Candidates.findByIdAndUpdate(id, {
+      Name,
+      EmailId,
+      image: imageUrl,
+      AiRating,
+      AppliedOn,
+      Tag,
+    });
     if (data != null) {
       res.status(200).json(data);
     } else {

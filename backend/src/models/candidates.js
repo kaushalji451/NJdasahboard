@@ -17,7 +17,6 @@ const candidateSchema = new Schema(
     },
     Status: {
       type: String,
-      required: true,
     },
     AiRating: {
       type: Number,

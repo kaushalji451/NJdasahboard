@@ -9,11 +9,9 @@ const EditCandidate = () => {
     Name: "",
     EmailId: "",
     image: "",
-    Status: "",
     AiRating: "",
     AppliedOn: "",
     Tag: "",
-    CvUrl: "",
   });
 
   useEffect(() => {
@@ -27,11 +25,9 @@ const EditCandidate = () => {
             Name: result.Name,
             EmailId: result.EmailId,
             image: result.image,
-            Status: result.Status,
             AiRating: result.AiRating,
             AppliedOn: result.AppliedOn.split("T")[0],
             Tag: result.Tag,
-            CvUrl: result.CvUrl,
           });
         }
       } catch (error) {
@@ -48,14 +44,19 @@ const EditCandidate = () => {
     });
   };
   let handleSubmit = async (e) => {
-    e.preventDefault();
+   e.preventDefault();
+     const formData = new FormData();
+  formData.append("Name", form.Name);
+  formData.append("EmailId", form.EmailId);
+  formData.append("image", form.image); // file, not URL
+  formData.append("AiRating", form.AiRating);
+  formData.append("AppliedOn", form.AppliedOn);
+  formData.append("Tag", form.Tag);
+
     try {
       let data = await fetch(`http://localhost:3000/candidates/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
+          method: "PUT",
+        body: formData,
       });
       let result = await data.json();
       if (result) {
@@ -104,15 +105,20 @@ const EditCandidate = () => {
             />
           </div>
           {/* image url */}
-          <div className="flex flex-col">
+           <div className="flex flex-col">
             <label htmlFor="image">Image Url</label>
             <input
-              type="text"
+              type="file"
               id="image"
               name="image"
               className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.image}
+              // value={form.image}
+              onChange={(e) => {
+                setform({
+                  ...form,
+                  image: e.target.files[0], // keep actual File object
+                });
+              }}
               required
             />
           </div>
@@ -143,35 +149,6 @@ const EditCandidate = () => {
               value={form.AppliedOn}
               required
             />
-          </div>
-          {/* cv url */}
-          <div className="flex flex-col">
-            <label htmlFor="cv_url">CV Url</label>
-            <input
-              type="text"
-              id="cv_url"
-              name="CvUrl"
-              className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.CvUrl}
-              required
-            />
-          </div>
-          {/* status */}
-          <div className="flex flex-col">
-            <label htmlFor="status">Status</label>
-            <select
-              name="Status"
-              id="status"
-              className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.Status}
-              required
-            >
-              <option value="">Select Status</option>
-              <option value="New">New</option>
-              <option value="Opended">Opended</option>
-            </select>
           </div>
           {/* tag */}
           <div className="flex flex-col">

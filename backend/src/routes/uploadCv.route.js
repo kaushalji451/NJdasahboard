@@ -1,6 +1,6 @@
 const express = require("express");
 const uploadCvRoute = express.Router();
-const User = require("../models/candidates");
+const {CandidateModel} = require("../models/candidates");
 const { google } = require("googleapis");
 const multer = require("multer");
 const { Readable } = require("stream");
@@ -52,7 +52,7 @@ uploadCvRoute.post("/upload", upload.single("CvUrl"), async (req, res) => {
 
     console.log("File uploaded to Google Drive:", previewUrl);
 
-    const updatedUser = await User.findOneAndUpdate(
+    const updatedUser = await CandidateModel.findOneAndUpdate(
       { Name :Name},
       { CvUrl: previewUrl },
       { new: true }

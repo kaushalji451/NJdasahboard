@@ -7,11 +7,9 @@ const AddCandidate = () => {
     Name: "",
     EmailId: "",
     image: "",
-    Status: "",
     AiRating: "",
     AppliedOn: "",
     Tag: "",
-    CvUrl: "",
   });
 
   let handleChange = (e) => {
@@ -27,11 +25,9 @@ const AddCandidate = () => {
   formData.append("Name", form.Name);
   formData.append("EmailId", form.EmailId);
   formData.append("image", form.image); // file, not URL
-  formData.append("Status", form.Status);
   formData.append("AiRating", form.AiRating);
   formData.append("AppliedOn", form.AppliedOn);
   formData.append("Tag", form.Tag);
-  formData.append("CvUrl", form.CvUrl);
     try {
       let data = await fetch("http://localhost:3000/candidates", {
         method: "POST",
@@ -43,11 +39,9 @@ const AddCandidate = () => {
           Name: "",
           EmailId: "",
           image: "",
-          Status: "",
           AiRating: "",
           AppliedOn: "",
           Tag: "",
-          CvUrl: "",
         });
       }
       if(result) {
@@ -137,35 +131,6 @@ const AddCandidate = () => {
               value={form.AppliedOn}
               required
             />
-          </div>
-          {/* cv url */}
-          <div className="flex flex-col">
-            <label htmlFor="cv_url">CV Url</label>
-            <input
-              type="text"
-              id="cv_url"
-              name="CvUrl"
-              className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.CvUrl}
-              required
-            />
-          </div>
-          {/* status */}
-          <div className="flex flex-col">
-            <label htmlFor="status">Status</label>
-            <select
-              name="Status"
-              id="status"
-              className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.Status}
-              required
-            >
-              <option value="">Select Status</option>
-              <option value="New">New</option>
-              <option value="Opended">Opended</option>
-            </select>
           </div>
           {/* tag */}
           <div className="flex flex-col">

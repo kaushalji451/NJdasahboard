@@ -1,13 +1,13 @@
 const initdata = require("./data");
 const dotenv = require("dotenv")
-const Candidate = require("../models/candidates");
+const {CandidateModel} = require("../models/candidates");
 dotenv.config();
 
-const connectDb = require("./connectDb");
-connectDb();
+const main = require("./connectDb");
+main();
 
 const initDb = async () => {
-let data = await Candidate.insertMany(initdata);
+    let data = await CandidateModel.insertMany(initdata);
 console.log("data was initilize",data);
 };
 initDb();
