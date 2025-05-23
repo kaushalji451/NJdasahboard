@@ -2,6 +2,9 @@ import React from "react";
 import Candidates from "../component/Candidates";
 import { useState, useEffect } from "react";
 import { Link  } from "react-router-dom";
+
+import UploadResume from "../component/UploadResume";
+
 const Dashboard = () => {
   const [search, setsearch] = useState("");
   const [dropdown, setdropdown] = useState(false);
@@ -32,6 +35,7 @@ const Dashboard = () => {
         {/* first */}
         <div className=" text-center py-6 px-3 flex flex-col gap-5">
           <h1 className="text-xl font-semibold">Next Chapter</h1>
+
           <input
             type="text"
             placeholder="what are you looking for?"
@@ -107,9 +111,11 @@ const Dashboard = () => {
             <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md ">
               Export
             </button>
-            <button className="bg-blue-600 text-white h-fit py-1 px-2 rounded-md">
+
+            {/* <button className="bg-blue-600 text-white h-fit py-1 px-2 rounded-md">
               Upload CV
-            </button>
+            </button> */}
+            <UploadResume />
           </div>
         </div>
         {/* second nav */}
