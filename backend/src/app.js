@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 const dotenv = require("dotenv");
 dotenv.config();
 const candidatesRoute = require("./routes/candidates.route");
-const  upload = require("./utils/Imageupload");
+const authRouter = require("./routes/auth.route");
 
 app.use(cors());
 app.use(express.json());
@@ -13,6 +13,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/candidates", candidatesRoute);
+app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
