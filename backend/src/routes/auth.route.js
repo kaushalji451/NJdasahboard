@@ -44,12 +44,12 @@ authRouter.post("/login", async (req, res) => {
     if (!parsedData.success) {
         return res.status(400).json({ message: parsedData.error.errors[0].message });
     }
-    const { email, password } = parsedData.data;
+    const { username, password } = parsedData.data;
 
     try {
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({ username });
         if (!user) {
-            return res.status(401).json({ message: "Invalid email" });
+            return res.status(401).json({ message: "Invalid username" });
         }
 
         const isPasswordValid = bcrypt.compare(password, user.password);
@@ -65,4 +65,4 @@ authRouter.post("/login", async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
-module.exports = authRouter;
+module.exports = authRouter
