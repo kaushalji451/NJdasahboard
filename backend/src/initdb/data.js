@@ -7,7 +7,7 @@
     AiRating: "84",
     AppliedOn: "12/06/2025",
     Tag: "Strong portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Aman Verma",
@@ -17,7 +17,7 @@
     AiRating: "67",
     AppliedOn: "12/06/2025",
     Tag: "Potential fit",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Sneha Kapoor",
@@ -27,7 +27,7 @@
     AiRating: "91",
     AppliedOn: "12/06/2025",
     Tag: "Strong portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Deepak Saini",
@@ -37,7 +37,7 @@
     AiRating: "45",
     AppliedOn: "12/06/2025",
     Tag: "Average portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Priya Deshmukh",
@@ -47,7 +47,7 @@
     AiRating: "38",
     AppliedOn: "12/06/2025",
     Tag: "No tag",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Rohit Thakur",
@@ -57,7 +57,7 @@
     AiRating: "72",
     AppliedOn: "12/06/2025",
     Tag: "Potential fit",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Neha Mehra",
@@ -67,7 +67,7 @@
     AiRating: "60",
     AppliedOn: "12/06/2025",
     Tag: "Average portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Karan Singh",
@@ -77,7 +77,7 @@
     AiRating: "22",
     AppliedOn: "12/06/2025",
     Tag: "No tag",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Ishita Roy",
@@ -87,7 +87,7 @@
     AiRating: "88",
     AppliedOn: "12/06/2025",
     Tag: "Strong portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Tushar Raj",
@@ -97,7 +97,7 @@
     AiRating: "53",
     AppliedOn: "12/06/2025",
     Tag: "Average portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Simran Kaur",
@@ -107,7 +107,7 @@
     AiRating: "95",
     AppliedOn: "12/06/2025",
     Tag: "Strong portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Aniket Tiwari",
@@ -117,7 +117,7 @@
     AiRating: "33",
     AppliedOn: "12/06/2025",
     Tag: "No tag",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Harshita Joshi",
@@ -127,7 +127,7 @@
     AiRating: "76",
     AppliedOn: "12/06/2025",
     Tag: "Potential fit",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Yash Rathore",
@@ -137,7 +137,7 @@
     AiRating: "49",
     AppliedOn: "12/06/2025",
     Tag: "Average portfolio",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   },
   {
     Name: "Divya Chauhan",
@@ -147,7 +147,7 @@
     AiRating: "15",
     AppliedOn: "12/06/2025",
     Tag: "No tag",
-    CvUrl: "https://drive.google.com/file/d/1nfR9MjBpHFdLS5jtgL9zxARe1ZZkhN3y/view?usp=drive_link"
+    CvUrl: ""
   }
 ];
 

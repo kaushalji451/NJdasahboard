@@ -33,7 +33,6 @@ const candidateSchema = new Schema(
     },
     CvUrl: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
