@@ -1,7 +1,7 @@
 const express = require("express");
 const candidatesRoute = express.Router();
 const connectDb = require("../initdb/connectDb");
-const {CandidateModel}  = require("../models/candidates");
+const { CandidateModel } = require("../models/candidates");
 const dotenv = require("dotenv");
 const Candidates = CandidateModel;
 connectDb();
@@ -80,16 +80,13 @@ candidatesRoute.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-candidatesRoute.put("/:id",upload.single("image"), async (req, res) => {
+candidatesRoute.put("/:id", async (req, res) => {
   let { id } = req.params;
-  let imageUrl = req.file.path;
-  let { Name, EmailId,  AiRating, AppliedOn, Tag } = req.body;
-
+  let { Name, EmailId, AiRating, AppliedOn, Tag } = req.body;
   try {
     let data = await Candidates.findByIdAndUpdate(id, {
       Name,
       EmailId,
-      image: imageUrl,
       AiRating,
       AppliedOn,
       Tag,
@@ -119,6 +116,5 @@ candidatesRoute.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 module.exports = candidatesRoute;
