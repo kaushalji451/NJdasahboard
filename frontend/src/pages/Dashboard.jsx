@@ -6,30 +6,7 @@ import { Link  } from "react-router-dom";
 import UploadResume from "../component/UploadResume";
 
 const Dashboard = () => {
-  const [search, setsearch] = useState("");
-  const [dropdown, setdropdown] = useState(false);
-  let handleChange = async (e) => {
-    if (e.target.value === "") {
-      setsearch("");
-    } else {
-      let data = await fetch(
-        `${import.meta.env.VITE_API_URL}/candidates/search?name=${e.target.value}`
-      );
-      let result = await data.json();
-      setsearch(result.data);
-    }
-  };
-
-  useEffect(() => {
-    if(search.length>0){
-      setdropdown(true);
-    }else{
-      setdropdown(false);
-    }
-  }, [search]);
-  
-
-  let handleClick = async () => {
+    let handleClick = async () => {
     let data = await fetch(
       `${import.meta.env.VITE_API_URL}/export`,
       {
@@ -166,9 +143,9 @@ const Dashboard = () => {
           </p>
         </div>
         {/* third main */}
-        <div>
+        {/* <div> */}
           {/* third nav */}
-          <div className="flex justify-between py-[18px] ">
+          {/* <div className="flex justify-between py-[18px] ">
             <p className="text-zinc-600">Showing 36 out of 36</p>
             <div className="flex gap-3">
               <input
@@ -198,9 +175,9 @@ const Dashboard = () => {
                 Filters
               </button>
             </div>
-          </div>
+          </div> */}
           {/* main */}
-          <div className="border border-slate-300 rounded-md">
+          {/* <div className="border border-slate-300 rounded-md">
             <div className="flex border-b border-slate-300 pb-2  p-3 bg-slate-200 text-zinc-600 rounded-md">
               <p className="w-[10%] ">
                 <span className="border px-1 rounded-sm">-</span>
@@ -216,7 +193,8 @@ const Dashboard = () => {
               <Candidates />
             </div>
           </div>
-        </div>
+        </div> */}
+         <Candidates />
       </div>
     </div>
   );
