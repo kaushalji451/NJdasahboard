@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EditCandidate from "./EditCandidate";
-
+import BulkUpdate from "./BulkUpdate";
 const Candidates = () => {
   const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -39,7 +39,7 @@ const Candidates = () => {
     if (searchResults.length > 0) {
       setFilteredData(searchResults);
       setSearchInput("");
-    } 
+    }
     setDropdown(false);
   };
 
@@ -76,9 +76,19 @@ const Candidates = () => {
 
   useEffect(() => {
     fetchData();
+    console.log("Data fetched successfully");
   }, []);
 
   const displayData = filteredData !== null ? filteredData : data;
+
+  const [ids, setIds] = useState([]);
+  const handleCheckBox = (id, checked) => {
+    if (checked) {
+      setIds((prev) => [...prev, id]);
+    } else {
+      setIds((prev) => prev.filter((item) => item !== id));
+    }
+  };
 
   return (
     <div>
@@ -88,6 +98,9 @@ const Candidates = () => {
           Showing {displayData.length} out of {data.length}
         </p>
         <div className="flex gap-3 relative">
+          <div>
+            <BulkUpdate ids={ids} setIds={setIds} refreshCallback={fetchData} />
+          </div>
           <input
             type="text"
             placeholder="Search for a candidate..."
@@ -160,6 +173,10 @@ const Candidates = () => {
                 <input
                   type="checkbox"
                   className="border px-1 rounded-sm size-5"
+                  checked={ids.includes(candidate._id)}
+                  onChange={(e) =>
+                    handleCheckBox(candidate._id, e.target.checked)
+                  }
                 />
               </p>
               <div className="w-[30%] flex items-center gap-4">

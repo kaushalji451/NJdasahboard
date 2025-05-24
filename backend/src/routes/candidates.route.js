@@ -117,6 +117,19 @@ candidatesRoute.delete("/:id", async (req, res) => {
   }
 });
 
+candidatesRoute.patch("/bulk-update", async (req, res) => {
+  const { ids, status } = req.body;
+  try {
+    const result = await Candidates.updateMany(
+      { _id: { $in: ids } },
+      { $set: { Status: status } }
+    );
+    res.status(200).json({ message: "Bulk update successful", result });
+  } catch (error) {
+    console.error("Error in bulk update:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = candidatesRoute;
 module.exports = candidatesRoute;
