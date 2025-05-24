@@ -37,22 +37,10 @@ const candidateSchema = new Schema(
   { timestamps: true }
 );
 
-const userSchema = new Schema(
 
-  {
-    email: String,
-    password: String,
-    username: String,
-  }
-
-
-
-);
 
 const CandidateModel =mongoose.model("Candidate", candidateSchema);
 
-const UserModel = mongoose.model("User", userSchema);
 module.exports = {
-  CandidateModel,
-  UserModel
+  CandidateModel
 };
