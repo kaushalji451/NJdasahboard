@@ -1,82 +1,90 @@
-import React from "react";
+import React from 'react'
+
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-const EditCandidate = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
+const EditCandidate = ({ Candidate_id }) => {
+   const id  = Candidate_id;
   const [form, setform] = useState({
     Name: "",
     EmailId: "",
-    image: "",
     AiRating: "",
     AppliedOn: "",
     Tag: "",
   });
 
-  useEffect(() => {
-    let handleData = async () => {
+
+  
+    useEffect(() => {
+      let handleData = async () => {
+        try {
+          let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`);
+          let result = await data.json();
+          if (result != null) {
+            setform({
+              Name: result.Name,
+              EmailId: result.EmailId,
+              AiRating: result.AiRating,
+              AppliedOn: result.AppliedOn.split("T")[0],
+              Tag: result.Tag,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      if(id) {
+        handleData();
+      }
+    }, [id]);
+  
+    let handleChange = (e) => {
+      setform({
+        ...form,
+        [e.target.name]: e.target.value,
+      });
+    };
+    let handleSubmit = async (e,close) => {
+     e.preventDefault();
       try {
-        let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`);
+        let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          body: JSON.stringify(form),
+        });
         let result = await data.json();
-        if (result != null) {
-          console.log(result);
-          setform({
-            Name: result.Name,
-            EmailId: result.EmailId,
-            image: result.image,
-            AiRating: result.AiRating,
-            AppliedOn: result.AppliedOn.split("T")[0],
-            Tag: result.Tag,
-          });
+        if (result) {
+          alert("Candidate updated successfully");
+          setTimeout(() => {
+            // Close the popup after a short delay
+            close();
+          }, 100);
         }
       } catch (error) {
-        console.log(error);
+        console.log("Error in adding candidate:", error);
       }
     };
-    handleData();
-  }, []);
-
-  let handleChange = (e) => {
-    setform({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-  let handleSubmit = async (e) => {
-   e.preventDefault();
-     const formData = new FormData();
-  formData.append("Name", form.Name);
-  formData.append("EmailId", form.EmailId);
-  formData.append("image", form.image); // file, not URL
-  formData.append("AiRating", form.AiRating);
-  formData.append("AppliedOn", form.AppliedOn);
-  formData.append("Tag", form.Tag);
-
-    try {
-      let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`, {
-          method: "PUT",
-        body: formData,
-      });
-      let result = await data.json();
-      if (result) {
-        alert("Candidate updated successfully");
-        setTimeout(() => {
-          navigate("/");
-        }, 100);
-      }
-    } catch (error) {
-      console.log("Error in adding candidate:", error);
-    }
-  };
 
   return (
-    <>
-      <div className="mt-10 flex flex-col items-center">
-        <h1 className="text-center font-bold text-3xl">Add A New Candidate</h1>
+     <div>
+      <Popup
+        trigger={
+          <button className=" block w-full text-left px-4 py-2 hover:bg-green-100">
+            Edit
+          </button>
+        }
+        modal
+        nested
+      >
+        {(close) => (
+          <div className="">
+           <div className="mt-10 flex flex-col items-center">
+        <h1 className="text-center font-bold text-3xl">Edit Candidate</h1>
         <form
-          className="h-full w-[60%] mt-5 flex flex-col gap-3 border p-8"
-          onSubmit={handleSubmit}
+          className="h-full w-[60%] mt-5 flex flex-col gap-3 border rounded-md border-slate-400 p-8 mb-4"
+          onSubmit={(e) => handleSubmit(e, close)}
         >
           {/* name */}
           <div className="flex flex-col">
@@ -101,24 +109,6 @@ const EditCandidate = () => {
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
               value={form.EmailId}
-              required
-            />
-          </div>
-          {/* image url */}
-           <div className="flex flex-col">
-            <label htmlFor="image">Image Url</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              className="border px-2 py-1 rounded-md"
-              // value={form.image}
-              onChange={(e) => {
-                setform({
-                  ...form,
-                  image: e.target.files[0], // keep actual File object
-                });
-              }}
               required
             />
           </div>
@@ -169,11 +159,14 @@ const EditCandidate = () => {
             </select>
           </div>
 
-          <button className="border bg-slate-400 w-[20%]">Submit</button>
+          <button className="border bg-blue-500 text-white py-1 rounded-sm w-[20%]">Submit</button>
         </form>
       </div>
-    </>
-  );
-};
+          </div>
+        )}
+      </Popup>
+    </div>
+  )
+}
 
-export default EditCandidate;
+export default EditCandidate

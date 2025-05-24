@@ -129,10 +129,6 @@ const Dashboard = () => {
             <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " onClick={handleClick}>
               Export
             </button>
-
-            {/* <button className="bg-blue-600 text-white h-fit py-1 px-2 rounded-md">
-              Upload CV
-            </button> */}
             <UploadResume />
           </div>
         </div>
@@ -209,10 +205,10 @@ const Dashboard = () => {
               <p className="w-[10%] ">
                 <span className="border px-1 rounded-sm">-</span>
               </p>
-              <p className="w-[30%]">Name</p>
+              <p className="w-[28%]">Name</p>
               <p className="w-[10%]">Status</p>
-              <p className="w-[10%]">Ai Rateing</p>
-              <p className="w-[10%]">Applide on</p>
+              <p className="w-[10%]">Ai Rating</p>
+              <p className="w-[10%]">Applied on</p>
               <p className="w-[20%]">Tags</p>
               <p className="w-[10%] text-end">:</p>
             </div>

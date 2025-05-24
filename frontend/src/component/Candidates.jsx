@@ -1,10 +1,10 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import EditCandidate from "./EditCandidate";
 const Candidates = () => {
   const [data, setData] = useState([]);
-
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   let handleDelete = async (id) => {
     let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`, {
@@ -20,9 +20,9 @@ const Candidates = () => {
     } else {
       alert("Error in Deletion");
     }
-  }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     let handleData = async () => {
       let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates`);
       let result = await data.json();
@@ -69,19 +69,31 @@ const Candidates = () => {
               View CV
             </button>
           </div>
-          <div className="flex gap-2 justify-between">
-            <Link
-              className="border px-2 h-9 flex items-center rounded-sm border-slate-400"
-              to={`/edit/${candidate._id}`}
+          {/* Dropdown Trigger */}
+          <div className="relative">
+            <button
+              className=" px-4 h-9 rounded-sm border-slate-400"
+              onClick={() =>
+                setOpenDropdown(
+                  openDropdown === candidate._id ? null : candidate._id
+                )
+              }
             >
-              Edit
-            </Link>
-             <button
-              className="border px-2 h-9 rounded-sm border-slate-400"
-              onClick={() => handleDelete(candidate._id)}
-            >
-              Delete
+              ⋮
             </button>
+
+            {/* Dropdown Menu */}
+            {openDropdown === candidate._id && (
+              <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded shadow-md z-10">
+                <EditCandidate Candidate_id={candidate._id} />
+                <button
+                  onClick={() => handleDelete(candidate._id)}
+                  className="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ))}
