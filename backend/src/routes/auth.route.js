@@ -13,7 +13,7 @@ authRouter.post("/signup", async (req, res) => {
     if (!parsedData.success) {
         return res.status(400).json({ message: parsedData.error.errors[0].message });
     }
-    const { email, username, password, role } = parsedData.data;
+    const { email, username, password } = parsedData.data;
 
     try {
         const existingUser = await UserModel.findOne({ username });
@@ -24,7 +24,7 @@ authRouter.post("/signup", async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         
  
-        const newUser = new UserModel({ email, username, password: hashedPassword, role });
+        const newUser = new UserModel({ email, username, password: hashedPassword });
         const savedUser = await newUser.save();
 
         if (!savedUser) {

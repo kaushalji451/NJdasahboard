@@ -7,9 +7,6 @@ const signupSchema = z.object({
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
         "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
     ),
-    role: z.enum(["candidate", "admin"],{
-        errorMap: () => ({ message: "Role must be either 'candidate' or 'admin'" })
-    })
 });
 const loginSchema = z.object({
     username: z.string(),
@@ -19,7 +16,14 @@ const loginSchema = z.object({
     )
 })
 
+const positionSchema = z.object({
+    title: z.string().min(3, { message: "Title must be at least 3 characters long" }),
+    description: z.string().min(10, { message: "Description must be at least 10 characters long" }),
+    requirements: z.string().optional()
+})
+
 module.exports = { 
     signupSchema,
-    loginSchema
+    loginSchema,
+    positionSchema
 }

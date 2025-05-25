@@ -39,6 +39,7 @@ const candidateSchema = new Schema(
 
 
 
+
 const CandidateModel =mongoose.model("Candidate", candidateSchema);
 
 module.exports = {

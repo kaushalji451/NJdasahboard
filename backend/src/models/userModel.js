@@ -20,8 +20,13 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-const UserModel = mongoose.model("User", userSchema);
+const positionSchema = new mongoose.Schema({
+    title:{type:String, required:true},
+})
 
+const UserModel = mongoose.model("User", userSchema);
+const PositionModel = mongoose.model("Position", positionSchema);
 module.exports = {
-    UserModel
+    UserModel,
+    PositionModel
 };
