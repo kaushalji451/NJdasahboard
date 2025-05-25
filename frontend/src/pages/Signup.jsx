@@ -20,14 +20,12 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup Data:", formData);
 
     try {
       const response = await axios.post(
         "http://localhost:3000/auth/signup",
         formData
       );
-      console.log("Signup Response:", response.data);
       if (response.status === 201) {
         alert("Signup successful! You can now log in.");
         navigate("/login");
@@ -43,7 +41,6 @@ const Signup = () => {
         email: "",
         password: "",
       });
-      console.log("Form reset successfully");
     }
   };
 

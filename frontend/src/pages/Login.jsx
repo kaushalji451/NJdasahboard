@@ -1,9 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../context/context";
 const Login = () => {
+  const { setUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -20,7 +23,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
     try {
       const response = await axios.post(
         "http://localhost:3000/auth/login",
@@ -28,7 +30,10 @@ const Login = () => {
       );
       if (response.status === 200) {
         let token = response.data.token;
-        Cookies.set("token", token, { expires: 7, secure: true });
+        Cookies.set("token", token, { expires: 7, secure: true ,path: "/",sameSite: "Strict"});
+        const decodedToken = jwtDecode(token);
+
+        setUser(decodedToken);
         alert("Login successful!");
         navigate("/dashboard");
       } else {
@@ -38,7 +43,6 @@ const Login = () => {
       setError(
         error.response?.data?.message || "An error occurred during login"
       );
-      console.log("Login Error:", error);
     }
     // Add your login logic here
   };
@@ -55,13 +59,13 @@ const Login = () => {
               Email
             </label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
               className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
             />
           </div>
           <div>
