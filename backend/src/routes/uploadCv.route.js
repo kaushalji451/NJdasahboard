@@ -4,6 +4,7 @@ const {CandidateModel} = require("../models/candidates");
 const { google } = require("googleapis");
 const multer = require("multer");
 const { Readable } = require("stream");
+const { UserModel } = require("../models/userModel");
 
 // Multer setup for file parsing
 const storage = multer.memoryStorage(); // store file in memory
@@ -52,8 +53,8 @@ uploadCvRoute.post("/upload", upload.single("CvUrl"), async (req, res) => {
 
     console.log("File uploaded to Google Drive:", previewUrl);
 
-    const updatedUser = await CandidateModel.findOneAndUpdate(
-      { Name :Name},
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { Name: Name },
       { CvUrl: previewUrl },
       { new: true }
     );

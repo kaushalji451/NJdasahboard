@@ -8,6 +8,9 @@ const candidatesRoute = require("./routes/candidates.route");
 const authRouter = require("./routes/auth.route");
 const exportRoute = require("./routes/export.route");
 const uploadCvRoute = require("./routes/uploadCv.route");
+const questionsRoute = require("./routes/questions.route");
+const scoreRoute = require("./routes/score.route");
+const sendemailRoute = require("./routes/sendEmail.route");
 
 // app.use(cors({
 //   origin: process.env.CLIENT_URL,
@@ -21,6 +24,9 @@ app.use("/candidates", candidatesRoute);
 app.use("/auth", authRouter);
 app.use("/candidate",uploadCvRoute);
 app.use("/export",exportRoute);
+app.use("/questions",questionsRoute);
+app.use("/score",scoreRoute);
+app.use("/sendEmail",sendemailRoute);
 
 
 
