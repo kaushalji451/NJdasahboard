@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import RoleRoute from "./component/RoleRoute";
 import Assessment from "./pages/Assessment";
+import Score from "./pages/Score";
 const App = () => {
   return (
     <div>
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/assessment" element={<RoleRoute requiredRole='candidate'><Assessment /></RoleRoute>} />
         <Route path="/login" element={<Login />} />
+        <Route path="/score" element={<Score />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </div>

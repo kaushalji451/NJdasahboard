@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Assessment = () => {
   const location = useLocation();
   const userId = location.state.id;
+  
   const navigate = useNavigate();
   const [selected, setselected] = useState({});
   const [submited, setsubmited] = useState({});
@@ -41,7 +42,7 @@ const Assessment = () => {
     let Questions = async () => {
       try {
         let data = await fetch(
-          `http://localhost:3001/questions?userId=${userId}`
+          `http://localhost:3000/questions?userId=${userId}`
         );
         if (data.status !== 200) {
           throw new Error("Failed to fetch questions");

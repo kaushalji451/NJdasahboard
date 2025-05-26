@@ -87,6 +87,7 @@ authRouter.post("/signup", uploadfile.single("file"), async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
     const parsedData = loginSchema.safeParse(req.body);
+    console.log("Parsed data:", parsedData);
     if (!parsedData.success) {
         return res.status(400).json({ message: parsedData.error.errors[0].message });
     }

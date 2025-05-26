@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../models/userModel");
+const {UserModel} = require("../models/userModel");
 const Score = require("../models/Score");
 
 const main = require("../initdb/connectDb");
@@ -26,7 +26,7 @@ scoreRoute.post("/", async (req, res) => {
       percentage,
     });
     let scoreData = await score.save();
-    let user = await User.findById(userId);
+    let user = await UserModel.findById(userId);
     user.score = scoreData._id;
     await user.save();
     res.status(200).json({ message: "success" });

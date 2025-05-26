@@ -43,7 +43,7 @@ const Login = () => {
         if (decodedToken.role === "admin") {
           navigate("/Dashboard");
         } else if (decodedToken.role === "candidate") {
-          navigate("/assessment");
+          navigate("/assessment", { state: { id: decodedToken.id } });
         } else {
           navigate("/home");
         }

@@ -1,7 +1,6 @@
 const express = require("express");
 const Question = require("../models/questions");
-const User = require("../models/userModel");
-
+const {UserModel} = require("../models/userModel");
 const main = require("../initdb/connectDb");
 
 main()
@@ -10,12 +9,12 @@ const questionsRoute = express.Router();
 
 questionsRoute.get("/", async (req, res) => {
   let { userId } = req.query;
-  console.log("got it ");
+  console.log("got it ", userId);
   if (!userId) {
     return res.status(400).json({ message: "No userId provided" });
   }
   try {
-    let user = await User.findById(userId);
+    let user = await UserModel.findById(userId);
     let questions = await Question.find({
       questiontype: { $in: ["Aptitude", "Personality Test", user.position] },
     });
