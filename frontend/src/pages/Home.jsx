@@ -6,7 +6,7 @@ const Home = () => {
     if(role === "Candidate") {
       navigate("/signup");
     }else{
-      // navigate("/admin");
+      navigate("/login");
     }
   };
   return (

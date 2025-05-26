@@ -47,19 +47,19 @@ const userSchema = new Schema({
   SOP: {
     type: String,
   },
-  Status: {
+  status: {
     type: String,
   },
-  AiRating: {
+  aiRating: {
     type: Number,
   },
-  AppliedOn: {
+  appliedOn: {
     type: Date,
   },
-  Tag: {
+  tag: {
     type: String,
   },
-  CvUrl: {
+  cvUrl: {
     type: String,
   },
   position: {

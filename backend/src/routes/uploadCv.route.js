@@ -1,6 +1,5 @@
 const express = require("express");
 const uploadCvRoute = express.Router();
-const {CandidateModel} = require("../models/candidates");
 const { google } = require("googleapis");
 const multer = require("multer");
 const { Readable } = require("stream");
@@ -11,9 +10,11 @@ const storage = multer.memoryStorage(); // store file in memory
 const upload = multer({ storage: storage });
 
 // Upload route with multer middleware
-uploadCvRoute.post("/upload", upload.single("CvUrl"), async (req, res) => {
+uploadCvRoute.post("/upload", upload.single("cvUrl"), async (req, res) => {
   try {
-    const { Name } = req.body;
+    const { username } = req.body;
+    console.log("Received username:", username);
+    console.log("Received file:", req.file);
     const file = req.file;
     if (!file) {
       return res.status(400).json({ error: "No resume uploaded" });
@@ -37,7 +38,7 @@ uploadCvRoute.post("/upload", upload.single("CvUrl"), async (req, res) => {
     // Upload to Google Drive
     const driveResponse = await drive.files.create({
       requestBody: {
-        name: `${Name}_Resume.pdf`,
+        name: `${username}_Resume.pdf`,
         mimeType: file.mimetype,
         parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
       },
@@ -54,10 +55,11 @@ uploadCvRoute.post("/upload", upload.single("CvUrl"), async (req, res) => {
     console.log("File uploaded to Google Drive:", previewUrl);
 
     const updatedUser = await UserModel.findOneAndUpdate(
-      { Name: Name },
-      { CvUrl: previewUrl },
+      { username: username },
+      { cvUrl: previewUrl },
       { new: true }
     );
+    console.log("Updated user with new CV URL:", updatedUser);
     if (!updatedUser) {
       return res
         .status(404)

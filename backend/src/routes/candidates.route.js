@@ -1,9 +1,8 @@
 const express = require("express");
 const candidatesRoute = express.Router();
 const connectDb = require("../initdb/connectDb");
-const { CandidateModel } = require("../models/candidates");
+const {UserModel} = require("../models/userModel");
 const dotenv = require("dotenv");
-const Candidates = CandidateModel;
 connectDb();
 
 const multer = require("multer");
@@ -29,7 +28,8 @@ dotenv.config();
 
 candidatesRoute.get("/", async (req, res) => {
   try {
-    const data = await Candidates.find({});
+    const data = await UserModel.find({});
+    console.log("Fetched candidates:", data); 
     res.status(200).json(data);
   } catch (error) {
     console.error("Error fetching candidates:", error);
@@ -40,9 +40,11 @@ candidatesRoute.get("/", async (req, res) => {
 candidatesRoute.get("/search", async (req, res) => {
   try {
     let { name } = req.query;
-    let data = await Candidates.find({
-      Name: { $regex: name, $options: "i" },
+    console.log("Search query:", name);
+    let data = await UserModel.find({
+      email: { $regex: name, $options: "i" },
     });
+    console.log("Search results:", data);
     res.json({ message: "done", data });
   } catch (error) {
     res.status(500).json({ message: "error", error });
@@ -51,8 +53,10 @@ candidatesRoute.get("/search", async (req, res) => {
 
 candidatesRoute.get("/:id", async (req, res) => {
   let { id } = req.params;
+  console.log("Fetching candidate with ID:", id);
   try {
-    let data = await Candidates.findById(id);
+    let data = await UserModel.findById(id);
+    console.log("Fetched candidate by ID:", data);
     if (data != null) {
       res.status(200).json(data);
     }
@@ -63,15 +67,15 @@ candidatesRoute.get("/:id", async (req, res) => {
 
 candidatesRoute.post("/", upload.single("image"), async (req, res) => {
   let imageUrl = req.file.path;
-  let { Name, EmailId, AiRating, AppliedOn, Tag } = req.body;
+  let { name, email, aiRating, appliedOn, tag } = req.body;
   try {
-    let data = await Candidates.create({
-      Name,
-      EmailId,
+    let data = await UserModel.create({
+      name,
+      email,
       image: imageUrl,
-      AiRating,
-      AppliedOn,
-      Tag,
+      aiRating,
+      appliedOn,
+      tag,
     });
     res.status(201).json(data);
   } catch (error) {
@@ -82,14 +86,14 @@ candidatesRoute.post("/", upload.single("image"), async (req, res) => {
 
 candidatesRoute.put("/:id", async (req, res) => {
   let { id } = req.params;
-  let { Name, EmailId, AiRating, AppliedOn, Tag } = req.body;
+  let { name, email, aiRating, appliedOn, tag } = req.body;
   try {
-    let data = await Candidates.findByIdAndUpdate(id, {
-      Name,
-      EmailId,
-      AiRating,
-      AppliedOn,
-      Tag,
+    let data = await UserModel.findByIdAndUpdate(id, {
+      name,
+      email,
+      aiRating,
+      appliedOn,
+      tag,
     });
     if (data != null) {
       res.status(200).json(data);
@@ -105,7 +109,7 @@ candidatesRoute.put("/:id", async (req, res) => {
 candidatesRoute.delete("/:id", async (req, res) => {
   let { id } = req.params;
   try {
-    let data = await Candidates.findByIdAndDelete(id);
+    let data = await UserModel.findByIdAndDelete(id);
     if (data) {
       res.status(200).json(data);
     } else {
@@ -120,9 +124,9 @@ candidatesRoute.delete("/:id", async (req, res) => {
 candidatesRoute.patch("/bulk-update", async (req, res) => {
   const { ids, status } = req.body;
   try {
-    const result = await Candidates.updateMany(
+    const result = await UserModel.updateMany(
       { _id: { $in: ids } },
-      { $set: { Status: status } }
+      { $set: { status: status } }
     );
     res.status(200).json({ message: "Bulk update successful", result });
   } catch (error) {

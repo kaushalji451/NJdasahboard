@@ -73,7 +73,12 @@ authRouter.post("/signup", uploadfile.single("file"), async (req, res) => {
             position: department,
             cvUrl: Url,
             SOP: sop,
+            status: "Applied",
+            appliedOn: new Date(),
+            aiRating: 0,
+            tag: "New",
         });
+        console.log("User object before saving:", user);
 
         const userSaved = await user.save();
         await sendEmailforRegistration(userSaved);

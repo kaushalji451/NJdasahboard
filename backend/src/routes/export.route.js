@@ -1,45 +1,32 @@
 const express = require("express");
 const exportRoute = express.Router();
 const connectDb = require("../initdb/connectDb");
-const { CandidateModel } = require("../models/candidates");
+const {UserModel} = require("../models/userModel");
 const PDFDocument = require("pdfkit");
 const axios = require("axios");
 
 connectDb();
-const Candidates = CandidateModel;
-
-async function createPDF(candidates, res) {
+async function createPDF(users, res) {
   const doc = new PDFDocument({ margin: 30 });
 
   // Set response headers
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", "attachment; filename=candidates.pdf");
+  res.setHeader("Content-Disposition", "attachment; filename=users.pdf");
 
   doc.pipe(res);
 
-  doc.fontSize(20).text("Candidate Report", { align: "center" }).moveDown();
+  doc.fontSize(20).text("User Report", { align: "center" }).moveDown();
 
-  for (const candidate of candidates) {
-    // // Add image if available
-    // try {
-    //   const response = await axios.get(candidate.image, {
-    //     responseType: "arraybuffer",
-    //   });
-    //   const imageBuffer = Buffer.from(response.data, "binary");
-    //   doc.image(imageBuffer, { fit: [150, 100], align: "center"});
-    // } catch (err) {
-    //   doc.text("Image load failed");
-    // }
-
+  for (const user of users) {
     doc
       .fontSize(14)
-      .text(`Name: ${candidate.Name}`,{marginTop: 10})
-      .text(`Email: ${candidate.EmailId}`)
-      .text(`Status: ${candidate.Status || "N/A"}`)
-      .text(`AI Rating: ${candidate.AiRating || "N/A"}`)
-      .text(`Applied On: ${new Date(candidate.AppliedOn).toDateString()}`)
-      .text(`Tag: ${candidate.Tag || "N/A"}`)
-      .text(`CV URL: ${candidate.CvUrl || "Not Provided"}`);
+      .text(`Name: ${user.username}`, { marginTop: 10 })
+      .text(`Email: ${user.email}`)
+      .text(`Status: ${user.status || "N/A"}`)
+      .text(`AI Rating: ${user.aiRating || "N/A"}`)
+      .text(`Applied On: ${new Date(user.appliedOn).toDateString()}`)
+      .text(`Tag: ${user.tag || "N/A"}`)
+      .text(`CV URL: ${user.cvUrl || "Not Provided"}`);
 
     doc
       .moveDown(2)
@@ -55,8 +42,9 @@ async function createPDF(candidates, res) {
 // Route to generate PDF and send to client
 exportRoute.get("/", async (req, res) => {
   try {
-    const candidates = await Candidates.find();
-    await createPDF(candidates, res);
+    const users = await UserModel.find();
+    console.log("Users fetched for PDF generation:", users);
+    await createPDF(users, res);
   } catch (err) {
     console.error("Error generating PDF:", err);
     res.status(500).send("Internal Server Error");

@@ -100,9 +100,9 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex gap-2 items-center">
-            <Link className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " to="/add">
+            {/* <Link className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " to="/add">
               Add
-            </Link>
+            </Link> */}
             <button className="bg-white h-fit py-1 px-2 border border-slate-400 rounded-md " onClick={handleClick}>
               Export
             </button>

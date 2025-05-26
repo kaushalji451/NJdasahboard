@@ -5,7 +5,7 @@ import "reactjs-popup/dist/index.css";
 import { useState, useEffect } from "react";
 const UploadResume = () => {
   const [form, setFormdata] = useState({
-    name: "",
+    username: "",
     resume: null,
   });
 
@@ -32,20 +32,20 @@ const UploadResume = () => {
   }, [search]);
 
   let handleNameSubmit = (candidate) => {
-    setFormdata({ ...form, name: candidate.Name });
+    setFormdata({ ...form, username: candidate.username });
     setdropdown(false);
   };
 
   const handleClick = async (e,close) => {
     e.preventDefault();
 
-    if (!form.name || !form.resume) {
+    if (!form.username || !form.resume) {
       alert("Please fill in all fields");
       return;
     }
     const formData = new FormData();
-    formData.append("Name", form.name);
-    formData.append("CvUrl", form.resume);
+    formData.append("username", form.username);
+    formData.append("cvUrl", form.resume);
 
     try {
       let data = await fetch(`${import.meta.env.VITE_API_URL}/candidate/upload`, {
@@ -91,12 +91,12 @@ const UploadResume = () => {
                     <input
                       type="text"
                       id="name"
-                      name="name"
+                      name="username"
                       className="border px-2 py-1 rounded-md w-100"
                       placeholder="type candidate name"
                       required
                       onChange={handleChange}
-                      value={form.name}
+                      value={form.username}
                     />
 
                     {dropdown === true && (
@@ -109,7 +109,7 @@ const UploadResume = () => {
                                 className="border-t py-1 px-2 border-slate-400 cursor-pointer"
                                 onClick={() => handleNameSubmit(candidate)}
                               >
-                                {candidate.Name}
+                                {candidate.username}
                               </p>
                             ))}
                           </div>
@@ -143,21 +143,6 @@ const UploadResume = () => {
                 </button>
               </form>
             </div>
-            {/* <div className="font-semibold text-cl"> Upload Resume </div>
-            <div className="content">
-              This is a simple popup content area. You can add forms, text, etc.
-            </div>
-            <div className="actions">
-              <button
-                className="button"
-                onClick={() => {
-                  console.log("Action performed");
-                  close();
-                }}
-              >
-                Close Popup
-              </button>
-            </div> */}
           </div>
         )}
       </Popup>

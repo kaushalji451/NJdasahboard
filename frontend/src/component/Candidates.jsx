@@ -24,6 +24,7 @@ const Candidates = () => {
           `${import.meta.env.VITE_API_URL}/candidates/search?name=${value}`
         );
         const result = await res.json();
+        console.log("Search results:", result);
         setSearchResults(result.data || []);
         setDropdown(true);
       } catch (err) {
@@ -54,6 +55,7 @@ const Candidates = () => {
   const fetchData = async () => {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/candidates`);
     const result = await res.json();
+    console.log("Fetched data:", result);
     if (result) setData(result);
   };
 
@@ -103,7 +105,7 @@ const Candidates = () => {
           </div>
           <input
             type="text"
-            placeholder="Search for a candidate..."
+            placeholder="Search candidates by email"
             className="border border-slate-300 rounded-md ps-4"
             value={searchInput}
             onChange={handleChange}
@@ -123,7 +125,7 @@ const Candidates = () => {
                         setDropdown(false);
                       }}
                     >
-                      {candidate.Name}
+                      {candidate.username} ({candidate.email})
                     </p>
                   ))}
                 </div>
@@ -180,24 +182,24 @@ const Candidates = () => {
                 />
               </p>
               <div className="w-[30%] flex items-center gap-4">
-                <img
+                {/* <img
                   src={candidate.image}
                   alt="Profile"
                   className="w-10 h-10 rounded-full"
-                />
+                /> */}
                 <div>
-                  <p className="text-black">{candidate.Name}</p>
-                  <p>{candidate.EmailId}</p>
+                  <p className="text-black">{candidate.username}</p>
+                  <p>{candidate.email}</p>
                 </div>
               </div>
               <p className="w-[10%]">
                 <span className="p-1 rounded-md bg-green-200 text-green-900">
-                  {candidate.Status}
+                  {candidate.status}
                 </span>
               </p>
-              <p className="w-[10%]">{candidate.AiRating}%</p>
-              <p className="w-[10%]">{candidate.AppliedOn.split("T")[0]}</p>
-              <p className="w-[20%]">{candidate.Tag}</p>
+              <p className="w-[10%]">{candidate.aiRating}%</p>
+              <p className="w-[10%]">{candidate.appliedOn}</p>
+              <p className="w-[20%]">{candidate.tag}</p>
               <div className="w-[10%] flex justify-between">
                 <button className="border px-2 h-9 rounded-sm border-slate-400">
                   View CV

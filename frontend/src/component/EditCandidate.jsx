@@ -6,27 +6,27 @@ import { useState, useEffect } from "react";
 const EditCandidate = ({ Candidate_id }) => {
    const id  = Candidate_id;
   const [form, setform] = useState({
-    Name: "",
-    EmailId: "",
-    AiRating: "",
-    AppliedOn: "",
-    Tag: "",
+    username: "",
+    email: "",
+    aiRating: "",
+    appliedOn: "",
+    tag: "",
   });
 
 
-  
-    useEffect(() => {
-      let handleData = async () => {
-        try {
-          let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`);
-          let result = await data.json();
-          if (result != null) {
+  useEffect(() => {
+    let handleData = async () => {
+      try {
+        let data = await fetch(`${import.meta.env.VITE_API_URL}/candidates/${id}`);
+        let result = await data.json();
+        console.log("Edit candidate data:", result);
+        if (result != null) {
             setform({
-              Name: result.Name,
-              EmailId: result.EmailId,
-              AiRating: result.AiRating,
-              AppliedOn: result.AppliedOn.split("T")[0],
-              Tag: result.Tag,
+              username: result.username,
+              email: result.email,
+              aiRating: result.aiRating,
+              appliedOn: result.appliedOn,
+              tag: result.tag,
             });
           }
         } catch (error) {
@@ -92,10 +92,10 @@ const EditCandidate = ({ Candidate_id }) => {
             <input
               type="text"
               id="name"
-              name="Name"
+              name="username"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
-              value={form.Name}
+              value={form.username}
               required
             />
           </div>
@@ -105,10 +105,10 @@ const EditCandidate = ({ Candidate_id }) => {
             <input
               type="email"
               id="email"
-              name="EmailId"
+              name="email"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
-              value={form.EmailId}
+              value={form.email}
               required
             />
           </div>
@@ -118,12 +118,12 @@ const EditCandidate = ({ Candidate_id }) => {
             <input
               type="Number"
               id="ai_rating"
-              name="AiRating"
+              name="aiRating"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
               min={1}
               max={100}
-              value={form.AiRating}
+              value={form.aiRating}
               required
             />
           </div>
@@ -133,10 +133,10 @@ const EditCandidate = ({ Candidate_id }) => {
             <input
               type="date"
               id="applied_on"
-              name="AppliedOn"
+              name="appliedOn"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
-              value={form.AppliedOn}
+              value={form.appliedOn}
               required
             />
           </div>
@@ -144,11 +144,11 @@ const EditCandidate = ({ Candidate_id }) => {
           <div className="flex flex-col">
             <label htmlFor="tag">Tag</label>
             <select
-              name="Tag"
+              name="tag"
               id="tag"
               className="border px-2 py-1 rounded-md"
               onChange={handleChange}
-              value={form.Tag}
+              value={form.tag}
               required
             >
               <option value="">Select Tag</option>
