@@ -30,12 +30,23 @@ const Login = () => {
       );
       if (response.status === 200) {
         let token = response.data.token;
-        Cookies.set("token", token, { expires: 7, secure: true ,path: "/",sameSite: "Strict"});
+        Cookies.set("token", token, {
+          expires: 7,
+          secure: true,
+          path: "/",
+          sameSite: "Strict",
+        });
         const decodedToken = jwtDecode(token);
 
         setUser(decodedToken);
         alert("Login successful!");
-        navigate("/dashboard");
+        if (decodedToken.role === "admin") {
+          navigate("/Dashboard");
+        } else if (decodedToken.role === "candidate") {
+          navigate("/assessment");
+        } else {
+          navigate("/home");
+        }
       } else {
         setError(response.data.message);
       }

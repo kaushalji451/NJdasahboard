@@ -5,7 +5,8 @@ import AddCandidate from "./pages/AddCandidate";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import AdminRoute from "./component/AdminRoute";
+import RoleRoute from "./component/RoleRoute";
+import Assessment from "./pages/Assessment";
 const App = () => {
   return (
     <div>
@@ -13,14 +14,15 @@ const App = () => {
         <Route
           path="/dashboard"
           element={
-            <AdminRoute requiredRole="admin">
+            <RoleRoute requiredRole="admin">
               <Dashboard />
-            </AdminRoute>
+            </RoleRoute>
           }
         />
-        <Route path="/add" element={<AddCandidate />} />
+        <Route path="/add" element={<RoleRoute requiredRole="admin"><AddCandidate /></RoleRoute>} />
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/assessment" element={<RoleRoute requiredRole='candidate'><Assessment /></RoleRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

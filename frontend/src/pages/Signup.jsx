@@ -1,120 +1,200 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formValidationSchema } from "../types/formValidationSchema";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { Link, useNavigate } from "react-router-dom";
-const Signup = () => {
+const Home = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+    setValue,
+  } = useForm({
+    resolver: zodResolver(formValidationSchema),
+    mode: "onChange",
   });
-  const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const fd = new FormData();
+    for (let key in data) {
+      fd.append(key, data[key]);
+    }
+    console.log("form data:",fd.get("username"))
+    console.log(data)
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/signup",
-        formData
-      );
-      if (response.status === 201) {
-        alert("Signup successful! You can now log in.");
+      const res = await axios.post("http://localhost:3000/auth/signup", fd);
+
+      if (res.data) {
+        localStorage.setItem("UserInfo", JSON.stringify(res.data.userSaved));
+        alert("Registration successful!");
         navigate("/login");
       } else {
-        setError(response.data.message || "Signup failed");
+        alert("Failed: " + data.message);
       }
-    } catch (e) {
-      console.error("Signup Error:", e);
-      setError(e.response?.data?.message || "An error occurred during signup");
-    } finally {
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-      });
+    } catch (err) {
+      console.error("Error submitting form:", err);
     }
   };
 
+  const sopValue = watch("sop") || "";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Create an Account
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your email"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your password"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200"
-          >
-            Sign Up
-          </button>
-        </form>
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-indigo-600 font-medium hover:underline"
-          >
-            Log in
-          </Link>
-        </p>
-        <div>
-          {error && <div className="mt-4 text-red-600 text-sm">{error}</div>}
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-xl mx-auto p-8 bg-white rounded-lg shadow-md space-y-6"
+    >
+      <h2 className="text-2xl font-semibold text-center mb-6">
+        Application Form
+      </h2>
+
+      <div>
+        <input
+          {...register("name")}
+          placeholder="Name"
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+        )}
       </div>
-    </div>
+      <div>
+        <input
+          placeholder="Username"
+          type="text"
+          {...register("username")}
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.username && (
+          <p className="mt-1 text-sm text-red-600">{errors.username.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("email")}
+          placeholder="Email"
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.email && (
+          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("phoneno")}
+          placeholder="Phone No"
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.phoneno && (
+          <p className="mt-1 text-sm text-red-600">{errors.phoneno.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("dob")}
+          type="date"
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.dob && (
+          <p className="mt-1 text-sm text-red-600">{errors.dob.message}</p>
+        )}
+      </div>
+
+      <div>
+        <select
+          {...register("gender")}
+          className="w-full border border-gray-300 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        {errors.gender && (
+          <p className="mt-1 text-sm text-red-600">{errors.gender.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("degree")}
+          placeholder="Degree"
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.degree && (
+          <p className="mt-1 text-sm text-red-600">{errors.degree.message}</p>
+        )}
+      </div>
+
+      <div>
+        <select
+          {...register("department")}
+          className="w-full border border-gray-300 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select Department</option>
+          <option value="technical_role">Technical</option>
+          <option value="business_role">Business</option>
+        </select>
+        {errors.department && (
+          <p className="mt-1 text-sm text-red-600">
+            {errors.department.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <textarea
+          {...register("sop")}
+          placeholder="Statement of Purpose"
+          className="w-full border border-gray-300 rounded-md p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={5}
+        />
+        <p className="text-sm text-gray-500 mt-1">
+          Characters: {sopValue.length}
+        </p>
+        {errors.sop && (
+          <p className="mt-1 text-sm text-red-600">{errors.sop.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          type="file"
+          onChange={(e) => setValue("file", e.target.files[0])}
+          className="w-full p-3 border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {errors.file && (
+          <p className="mt-1 text-sm text-red-600">{errors.file.message}</p>
+        )}
+      </div>
+      <div>
+        <input
+          type="password"
+          {...register("password")}
+          className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Password"
+        />
+        {errors.password && (
+          <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-md transition-colors"
+      >
+        {isSubmitting ? "Submitting..." : "Submit"}
+      </button>
+    </form>
   );
 };
 
-export default Signup;
+export default Home;
