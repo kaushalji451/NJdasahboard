@@ -3,13 +3,12 @@ import React from 'react'
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useState, useEffect } from "react";
-const EditCandidate = ({ Candidate_id }) => {
+const EditCandidate = ({ Candidate_id , fetchData, setOpenDropdown }) => {
    const id  = Candidate_id;
   const [form, setform] = useState({
     username: "",
     email: "",
     aiRating: "",
-    appliedOn: "",
     tag: "",
   });
 
@@ -25,7 +24,6 @@ const EditCandidate = ({ Candidate_id }) => {
               username: result.username,
               email: result.email,
               aiRating: result.aiRating,
-              appliedOn: result.appliedOn,
               tag: result.tag,
             });
           }
@@ -61,6 +59,8 @@ const EditCandidate = ({ Candidate_id }) => {
             // Close the popup after a short delay
             close();
           }, 100);
+          fetchData(); // Refresh the data after updating
+          setOpenDropdown(null); 
         }
       } catch (error) {
         console.log("Error in adding candidate:", error);
@@ -124,19 +124,6 @@ const EditCandidate = ({ Candidate_id }) => {
               min={1}
               max={100}
               value={form.aiRating}
-              required
-            />
-          </div>
-          {/* appied on */}
-          <div className="flex flex-col">
-            <label htmlFor="applied_on">Applied On</label>
-            <input
-              type="date"
-              id="applied_on"
-              name="appliedOn"
-              className="border px-2 py-1 rounded-md"
-              onChange={handleChange}
-              value={form.appliedOn}
               required
             />
           </div>

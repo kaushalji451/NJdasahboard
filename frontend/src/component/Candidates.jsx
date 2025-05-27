@@ -182,11 +182,6 @@ const Candidates = () => {
                 />
               </p>
               <div className="w-[30%] flex items-center gap-4">
-                {/* <img
-                  src={candidate.image}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full"
-                /> */}
                 <div>
                   <p className="text-black">{candidate.username}</p>
                   <p>{candidate.email}</p>
@@ -198,7 +193,7 @@ const Candidates = () => {
                 </span>
               </p>
               <p className="w-[10%]">{candidate.aiRating}%</p>
-              <p className="w-[10%]">{candidate.appliedOn}</p>
+              <p className="w-[10%]">{candidate.appliedOn.split("T")[0]}</p>
               <p className="w-[20%]">{candidate.tag}</p>
               <div className="w-[10%] flex justify-between">
                 <button className="border px-2 h-9 rounded-sm border-slate-400">
@@ -222,7 +217,7 @@ const Candidates = () => {
                 {/* Dropdown Menu */}
                 {openDropdown === candidate._id && (
                   <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded shadow-md z-10">
-                    <EditCandidate Candidate_id={candidate._id} />
+                    <EditCandidate Candidate_id={candidate._id} fetchData={fetchData}  setOpenDropdown={setOpenDropdown} />
                     <button
                       onClick={() => handleDelete(candidate._id)}
                       className="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"

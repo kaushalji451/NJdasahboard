@@ -86,13 +86,12 @@ candidatesRoute.post("/", upload.single("image"), async (req, res) => {
 
 candidatesRoute.put("/:id", async (req, res) => {
   let { id } = req.params;
-  let { name, email, aiRating, appliedOn, tag } = req.body;
+  let { name, email, aiRating, tag } = req.body;
   try {
     let data = await UserModel.findByIdAndUpdate(id, {
       name,
       email,
       aiRating,
-      appliedOn,
       tag,
     });
     if (data != null) {
