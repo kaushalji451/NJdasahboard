@@ -15,10 +15,7 @@ const sendemailRoute = require("./routes/sendEmail.route");
 // app.use(cors({
 //   origin: process.env.CLIENT_URL,
 // }));
-app.use(cors({
-  origin: "https://n-jdasahboard.vercel.app", // exact frontend domain
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
