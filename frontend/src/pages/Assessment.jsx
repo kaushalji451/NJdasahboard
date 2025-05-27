@@ -42,7 +42,7 @@ const Assessment = () => {
     let Questions = async () => {
       try {
         let data = await fetch(
-          `http://localhost:3000/questions?userId=${userId}`
+          `${import.meta.env.VITE_API_URL}/questions?userId=${userId}`
         );
         if (data.status !== 200) {
           throw new Error("Failed to fetch questions");

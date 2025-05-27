@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         formData
       );
       if (response.status === 200) {

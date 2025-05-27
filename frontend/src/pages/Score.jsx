@@ -27,7 +27,7 @@ const Score = () => {
       const handleDataSubmit = async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/score?userId=${userId}`,
+            `${import.meta.env.VITE_API_URL}/score?userId=${userId}`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ const Score = () => {
           console.log("Score submitted:", result);
 
           const emailRes = await fetch(
-            `http://localhost:3000/sendEmail?userId=${userId}`
+            `${import.meta.env.VITE_API_URL}/sendEmail?userId=${userId}`
           );
           const emailResult = await emailRes.json();
           console.log("Email sent:", emailResult);

@@ -27,7 +27,7 @@ const Home = () => {
     console.log(data)
 
     try {
-      const res = await axios.post("http://localhost:3000/auth/signup", fd);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, fd);
 
       if (res.data) {
         localStorage.setItem("UserInfo", JSON.stringify(res.data.userSaved));
